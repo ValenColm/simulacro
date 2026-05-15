@@ -1,0 +1,30 @@
+# Variables de entorno — NUNCA subir a GitHub
+.env
+
+# Entorno virtual de Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Archivos de audio generados
+output.mp3
+*.mp3
+*.wav
+
+# Cache de Python
+*.egg-info/
+dist/
+build/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+venv/
+output.mp3

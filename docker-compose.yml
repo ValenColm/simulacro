@@ -1,0 +1,25 @@
+services:
+
+  # ── Backend (FastAPI + FinBot) ────────────────────────────────────────────
+  backend:
+    build: .
+    container_name: finbot-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./backend:/app
+    restart: unless-stopped
+
+  # ── Frontend (HTML estático) ──────────────────────────────────────────────
+  frontend:
+    image: nginx:alpine
+    container_name: finbot-frontend
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+    restart: unless-stopped
+    depends_on:
+      - backend
