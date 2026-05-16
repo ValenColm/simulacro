@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinBot — Asistente Financiero</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon">💹</div>
+            <h1>Fin<span>Bot</span></h1>
+        </div>
+        <div class="status">
+            <div class="dot"></div>Sistema activo · FinBot v1.0
+        </div>
+    </header>
+
+    <div class="controls">
+        <div class="control-group">
+            <span class="control-label">Entrada</span>
+            <button class="mode-btn active" onclick="setModo('texto', this)">Texto</button>
+            <button class="mode-btn" onclick="setModo('voz', this)">🎙 Voz</button>
+            <button class="mode-btn" onclick="setModo('imagen', this)">🖼 Imagen</button>
+        </div>
+        <div class="divider"></div>
+        <div class="control-group">
+            <span class="control-label">Respuesta</span>
+            <button class="mode-btn active" onclick="setRespuesta('texto', this)">Texto</button>
+            <button class="mode-btn" onclick="setRespuesta('audio', this)">🔊 Audio</button>
+        </div>
+    </div>
+
+    <div id="chat">
+        <div class="welcome" id="welcome">
+            <h2>Bienvenido a FinBot</h2>
+            <p>Su asistente financiero virtual. Pregúnteme sobre inversiones, tasas de cambio, productos FinBot y más.
+            </p>
+            <div class="welcome-chips">
+                <div class="chip" onclick="sendQuick('¿A cuánto está el dólar hoy?')">💵 Dólar hoy</div>
+                <div class="chip" onclick="sendQuick('¿Cuál es el horario de atención?')">🕐 Horario</div>
+                <div class="chip" onclick="sendQuick('Si invierto 10M al 8% por 5 años, ¿cuánto tengo?')">📈 Inversión
+                </div>
+                <div class="chip" onclick="sendQuick('¿Cuánto vale el Bitcoin hoy?')">₿ Bitcoin</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="input-area">
+        <div id="image-preview-wrap">
+            <img id="image-preview" src="" alt="preview">
+            <span id="image-name">imagen.jpg</span>
+            <button id="remove-image" onclick="removeImage()">✕</button>
+        </div>
+        <div id="recording-indicator">
+            <div class="rec-dot"></div>
+            <span>Grabando... haz clic en 🎙 para detener</span>
+        </div>
+        <div class="input-row">
+            <textarea id="msg-input" placeholder="Escribe tu mensaje..." rows="1" onkeydown="handleKey(event)"
+                oninput="autoResize(this)"></textarea>
+            <div class="action-btns">
+                <button class="icon-btn" onclick="document.getElementById('file-input').click()"
+                    title="Imagen">🖼</button>
+                <input type="file" id="file-input" accept="image/*" onchange="handleImageSelect(event)">
+                <button class="icon-btn" id="mic-btn" onclick="toggleRecording()" title="Voz">🎙</button>
+                <button id="send-btn" onclick="enviar()">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

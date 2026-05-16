@@ -46,9 +46,6 @@ def sintetizar_voz(texto: str) -> bytes:
     cliente_eleven = ElevenLabs(api_key=os.getenv("ELEVENLABS_API_KEY"))
 
     # 2. Llama a text_to_speech.convert()
-    # voice_id="Rachel"                → voz femenina en inglés/español de ElevenLabs
-    # model_id="eleven_multilingual_v2" → modelo que soporta español nativo
-    # text=texto                        → el texto que queremos convertir a audio
     generador_audio = cliente_eleven.text_to_speech.convert(
         voice_id="JBFqnCBsd6RMkjVDRZzb",  # George — Warm, Captivating Storyteller (lo más cercano a Morgan Freeman)
         model_id="eleven_multilingual_v2",  # soporta español nativo

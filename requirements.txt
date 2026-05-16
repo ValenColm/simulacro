@@ -5,7 +5,9 @@ uvicorn
 requests
 langchain
 langchain-openai
+langchain-community
 faiss-cpu
 beautifulsoup4
 numpy
 elevenlabs
+python-multipart

@@ -29,10 +29,14 @@ Temas permitidos (SOLO responde sobre estos):
 2. Mercados e inversiones: tasas de cambio, criptomonedas (Bitcoin, etc.), acciones, rendimientos.
 3. Productos y servicios de FinBot: cuentas, tarjetas, préstamos, transferencias.
 4. Soporte técnico: problemas con la app, transacciones, seguridad de la cuenta.
+5. Saludos, presentaciones y contexto personal del usuario:
+   - Si el usuario se presenta (nombre, profesión, contexto), acéptalo con cordialidad
+     y recuerda esa información durante la conversación.
+   - Ejemplo válido: "Hola, soy Daniela, analista financiera" → Saludar y recordar el nombre.
 
 Restricción de dominio:
-- Si el usuario pregunta algo que NO sea finanzas, productos FinBot o soporte,
-  declina amablemente en el idioma activo.
+- Si el usuario pregunta algo que NO sea finanzas, productos FinBot, soporte
+  ni contexto personal/saludo, declina amablemente en el idioma activo.
 - Rechazo en español: "Lo siento, solo puedo ayudarte con temas financieros,
   productos FinBot o soporte técnico."
 - Rejection in English: "I am sorry, I can only assist with financial topics."
@@ -76,10 +80,14 @@ def chat(mensaje_usuario):
     # Extraemos el mensaje completo (puede ser texto O una solicitud de tool)
     mensaje = respuesta.choices[0].message
 
+    tool_used = False
+    tools_usadas = []
+
     # 6. ¿OpenAI quiere ejecutar una tool?
     # Si 'tool_calls' existe, el modelo NO generó texto todavía —
     # está pidiendo que nosotros ejecutemos una función y le devolvamos el resultado
     if mensaje.tool_calls:
+        tool_used = True
 
         # Guardamos el mensaje del asistente con la solicitud de tool en el historial
         # Esto es obligatorio: OpenAI necesita ver su propio mensaje antes del tool result
@@ -91,6 +99,7 @@ def chat(mensaje_usuario):
 
             # Nombre de la función que OpenAI quiere ejecutar (string)
             nombre_funcion = tool_call.function.name
+            tools_usadas.append(nombre_funcion)
 
             # Los argumentos llegan como un string JSON, los convertimos a dict
             # Ejemplo: '{"principal": 1000000, "rate": 8, "years": 5}'
@@ -136,8 +145,8 @@ def chat(mensaje_usuario):
         while historial and historial[0]["role"] != "user":
             historial.pop(0)
 
-    # 8. Retorna la respuesta
-    return texto_respuesta
+    # 8. Retorna la respuesta + metadata de tools
+    return texto_respuesta, tool_used, tools_usadas
 
 # 9. Loop simple para probar en terminal
 if __name__ == "__main__":
